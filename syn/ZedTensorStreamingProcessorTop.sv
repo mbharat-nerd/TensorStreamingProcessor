@@ -38,11 +38,12 @@ module ZedTensorStreamingProcessorTop (
 	   ARM_inst
 	   (.*,
 	   .reset_rtl(BTNC),
-	   .sys_clk(GCLK));
+	   .sys_clock(GCLK));
 	
 	
 	// To make sure our design is not hosed
 	assign {LD7,LD6,LD5,LD4,LD3,LD2,LD1,LD0} = 'hAB;
 
 	
-endmodule : ZedTensorStreamingProcessor
+endmodule : ZedTensorStreamingProcessorTop
+
