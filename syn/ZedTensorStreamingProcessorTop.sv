@@ -1,3 +1,14 @@
+/*
+ Top level instance for Tensor Streaming Processor (TSP) on a Zedboard
+ 
+ TSP design was inspired by Groq's 2020 paper:  "Think Fast: A Tensor Streaming
+ Processor (TSP) for Accelerating Deep Learning Networks".
+  
+ 
+ Bharathwaj Muthuswamy
+ bharathwaj.muthuswamy@gmail.com
+*/
+
 module ZedTensorStreamingProcessorTop (
 	input logic GCLK, // 100 MHz
 	input logic BTNC, // active high, for global reset
@@ -34,6 +45,7 @@ module ZedTensorStreamingProcessorTop (
 	timeunit 1ps;
 	timeprecision 1ps;
 	
+	// The ARM core will load code to be executed onto the TSP memory
 	design_TSP_wrapper
 	   ARM_inst
 	   (.*,

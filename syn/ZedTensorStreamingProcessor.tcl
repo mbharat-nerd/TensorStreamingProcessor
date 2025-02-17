@@ -3,9 +3,15 @@ set_property board_part digilentinc.com:zedboard:part0:1.1 [current_project]
 
 # Sources (synthesizable)
 add_files -norecurse ./ZedTensorStreamingProcessorTop.sv
+add_files -norecurse ../src/TensorStreamingProcessor.sv
+add_files -norecurse ../src/icu_dispatcher.sv
+add_files -norecurse ../src/streaming_register_file.sv
+add_files -norecurse ../src/vector_execution_unit.sv
+add_files -norecurse ../src/memory_unit.sv
 update_compile_order -fileset sources_1
 
 # Block diagram for ARM and DDR interface
+# TSP code will be uploaded TSP ICU BRAMs by C code running on ARM
 create_bd_design "design_TSP"
 update_compile_order -fileset sources_1
 startgroup
