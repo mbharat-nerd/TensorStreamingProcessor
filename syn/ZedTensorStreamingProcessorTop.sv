@@ -19,8 +19,8 @@ module ZedTensorStreamingProcessorTop (
 	output logic LD3,
 	output logic LD2,
 	output logic LD1,
-	output logic LD0,
-	inout logic [14:0] DDR_addr,
+	output logic LD0);
+/*	inout logic [14:0] DDR_addr,
     inout logic [2:0] DDR_ba,
     inout logic DDR_cas_n,
     inout logic DDR_ck_n,
@@ -40,21 +40,30 @@ module ZedTensorStreamingProcessorTop (
     inout logic [53:0] FIXED_IO_mio,
     inout logic FIXED_IO_ps_clk,
     inout logic FIXED_IO_ps_porb,
-    inout logic FIXED_IO_ps_srstb);
+    inout logic FIXED_IO_ps_srstb*/
 	
 	timeunit 1ps;
 	timeprecision 1ps;
 	
+	logic [31:0] instruction_out;
+	
 	// The ARM core will load code to be executed onto the TSP memory
-	design_TSP_wrapper
+	// Will be instantiated once TSP subsystem has been tested
+	/*design_TSP_wrapper
 	   ARM_inst
 	   (.*,
 	   .reset_rtl(BTNC),
 	   .sys_clock(GCLK));
+	*/
 	
+	TensorStreamingProcessor
+	   TSP_instance 
+	       (.clk(GCLK),
+	        .rst(BTNC),
+	        .instruction_out(instruction_out));
 	
 	// To make sure our design is not hosed
-	assign {LD7,LD6,LD5,LD4,LD3,LD2,LD1,LD0} = 'hAB;
+	assign {LD7,LD6,LD5,LD4,LD3,LD2,LD1,LD0} = instruction_out[7:0];
 
 	
 endmodule : ZedTensorStreamingProcessorTop
