@@ -46,8 +46,9 @@ module ZedTensorStreamingProcessorTop (
 	timeprecision 1ps;
 	
 	logic [31:0] instruction_out;
+	logic clk, locked;
 	
-	// The ARM core will load code to be executed onto the TSP memory
+	// TODO:  The ARM core will load code to be executed onto the TSP memory
 	// Will be instantiated once TSP subsystem has been tested
 	/*design_TSP_wrapper
 	   ARM_inst
@@ -56,14 +57,29 @@ module ZedTensorStreamingProcessorTop (
 	   .sys_clock(GCLK));
 	*/
 	
+	// PLL clock buffer(s)
+	clk_wiz_0 clk_inst 
+	       (.clk_out1(clk),  
+            .reset(1'b0),
+            .locked(locked), 
+            .clk_in1(GCLK)); 
+    		
+	// Classic 2-stage reset synchronizer
+	// Need this because BTNC is an asychronous signal coming into FPGA
+	logic rst, sync_ff1;	
+	always @(posedge GCLK) begin	   
+	   sync_ff1 <= BTNC | ~locked;
+	   rst <= sync_ff1;
+	end
+	
 	TensorStreamingProcessor
 	   TSP_instance 
-	       (.clk(GCLK),
-	        .rst(BTNC),
-	        .instruction_out(instruction_out));
+	       (.*);
 	
-	// To make sure our design is not hosed
-	assign {LD7,LD6,LD5,LD4,LD3,LD2,LD1,LD0} = instruction_out[7:0];
+	// Good practice to always register outputs
+	always_ff @(posedge clk) begin
+	   {LD7,LD6,LD5,LD4,LD3,LD2,LD1,LD0} <= instruction_out[7:0];
+	end	
 
 	
 endmodule : ZedTensorStreamingProcessorTop

@@ -8,7 +8,20 @@ add_files -norecurse ../src/icu_dispatcher.sv
 add_files -norecurse ../src/streaming_register_file.sv
 add_files -norecurse ../src/vector_execution_unit.sv
 add_files -norecurse ../src/memory_unit.sv
+add_files -norecurse ../src/vector_data.hex
 add_files -norecurse ../src/instruction_memory.sv
+
+# Clock buffer(s)
+create_ip -name clk_wiz -vendor xilinx.com -library ip -version 6.0 -module_name clk_wiz_0
+generate_target {instantiation_template} [get_files ./ZedTensorStreamingProcessor/ZedTensorStreamingProcessor.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0.xci]
+update_compile_order -fileset sources_1
+generate_target all [get_files  ./ZedTensorStreamingProcessor/ZedTensorStreamingProcessor.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0.xci]
+catch { config_ip_cache -export [get_ips -all clk_wiz_0] }
+export_ip_user_files -of_objects [get_files ./ZedTensorStreamingProcessor/ZedTensorStreamingProcessor.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0.xci] -no_script -sync -force -quiet
+create_ip_run [get_files -of_objects [get_fileset sources_1] ./ZedTensorStreamingProcessor/ZedTensorStreamingProcessor.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0.xci]
+export_simulation -of_objects [get_files ./ZedTensorStreamingProcessor/ZedTensorStreamingProcessor.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0.xci] -directory ./ZedTensorStreamingProcessor/ZedTensorStreamingProcessor.ip_user_files/sim_scripts -ip_user_files_dir ./ZedTensorStreamingProcessor/ZedTensorStreamingProcessor.ip_user_files -ipstatic_source_dir ./ZedTensorStreamingProcessor/ZedTensorStreamingProcessor.ip_user_files/ipstatic -lib_map_path [list {modelsim=./ZedTensorStreamingProcessor/ZedTensorStreamingProcessor.cache/compile_simlib/modelsim} {questa=./ZedTensorStreamingProcessor/ZedTensorStreamingProcessor.cache/compile_simlib/questa} {ies=./ZedTensorStreamingProcessor/ZedTensorStreamingProcessor.cache/compile_simlib/ies} {xcelium=./ZedTensorStreamingProcessor/ZedTensorStreamingProcessor.cache/compile_simlib/xcelium} {vcs=./ZedTensorStreamingProcessor/ZedTensorStreamingProcessor.cache/compile_simlib/vcs} {riviera=./ZedTensorStreamingProcessor/ZedTensorStreamingProcessor.cache/compile_simlib/riviera}] -use_ip_compiled_libs -force -quiet
+
+
 update_compile_order -fileset sources_1
 
 # Block diagram for ARM and DDR interface - commented out till TSP subsystem is functional

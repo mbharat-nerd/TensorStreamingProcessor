@@ -11,69 +11,81 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="0.000 ns"></ZoomStartTime>
-      <ZoomEndTime time="1,000.001 ns"></ZoomEndTime>
-      <Cursor1Time time="999.991 ns"></Cursor1Time>
+      <ZoomStartTime time="0.000000 us"></ZoomStartTime>
+      <ZoomEndTime time="11.000001 us"></ZoomEndTime>
+      <Cursor1Time time="0.990100 us"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="276"></NameColumnWidth>
-      <ValueColumnWidth column_width="120"></ValueColumnWidth>
+      <ValueColumnWidth column_width="100"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="14" />
-   <wvobject type="divider" fp_name="divider14">
+   <WVObjectSize size="17" />
+   <wvobject fp_name="divider14" type="divider">
       <obj_property name="label">Top Level Signals</obj_property>
       <obj_property name="DisplayName">label</obj_property>
    </wvobject>
-   <wvobject fp_name="/ZedTensorStreamingProcessorTestBench/GCLK" type="logic">
+   <wvobject type="logic" fp_name="/ZedTensorStreamingProcessorTestBench/GCLK">
       <obj_property name="ElementShortName">GCLK</obj_property>
       <obj_property name="ObjectShortName">GCLK</obj_property>
    </wvobject>
-   <wvobject fp_name="/ZedTensorStreamingProcessorTestBench/BTNC" type="logic">
+   <wvobject type="logic" fp_name="/ZedTensorStreamingProcessorTestBench/BTNC">
       <obj_property name="ElementShortName">BTNC</obj_property>
       <obj_property name="ObjectShortName">BTNC</obj_property>
    </wvobject>
-   <wvobject fp_name="/ZedTensorStreamingProcessorTestBench/BTNU" type="logic">
-      <obj_property name="ElementShortName">BTNU</obj_property>
-      <obj_property name="ObjectShortName">BTNU</obj_property>
-   </wvobject>
-   <wvobject fp_name="/ZedTensorStreamingProcessorTestBench/LD7" type="logic">
+   <wvobject type="logic" fp_name="/ZedTensorStreamingProcessorTestBench/LD7">
       <obj_property name="ElementShortName">LD7</obj_property>
       <obj_property name="ObjectShortName">LD7</obj_property>
    </wvobject>
-   <wvobject fp_name="/ZedTensorStreamingProcessorTestBench/LD6" type="logic">
+   <wvobject type="logic" fp_name="/ZedTensorStreamingProcessorTestBench/LD6">
       <obj_property name="ElementShortName">LD6</obj_property>
       <obj_property name="ObjectShortName">LD6</obj_property>
    </wvobject>
-   <wvobject fp_name="/ZedTensorStreamingProcessorTestBench/LD5" type="logic">
+   <wvobject type="logic" fp_name="/ZedTensorStreamingProcessorTestBench/LD5">
       <obj_property name="ElementShortName">LD5</obj_property>
       <obj_property name="ObjectShortName">LD5</obj_property>
    </wvobject>
-   <wvobject fp_name="/ZedTensorStreamingProcessorTestBench/LD4" type="logic">
+   <wvobject type="logic" fp_name="/ZedTensorStreamingProcessorTestBench/LD4">
       <obj_property name="ElementShortName">LD4</obj_property>
       <obj_property name="ObjectShortName">LD4</obj_property>
    </wvobject>
-   <wvobject fp_name="/ZedTensorStreamingProcessorTestBench/LD3" type="logic">
+   <wvobject type="logic" fp_name="/ZedTensorStreamingProcessorTestBench/LD3">
       <obj_property name="ElementShortName">LD3</obj_property>
       <obj_property name="ObjectShortName">LD3</obj_property>
    </wvobject>
-   <wvobject fp_name="/ZedTensorStreamingProcessorTestBench/LD2" type="logic">
+   <wvobject type="logic" fp_name="/ZedTensorStreamingProcessorTestBench/LD2">
       <obj_property name="ElementShortName">LD2</obj_property>
       <obj_property name="ObjectShortName">LD2</obj_property>
    </wvobject>
-   <wvobject fp_name="/ZedTensorStreamingProcessorTestBench/LD1" type="logic">
+   <wvobject type="logic" fp_name="/ZedTensorStreamingProcessorTestBench/LD1">
       <obj_property name="ElementShortName">LD1</obj_property>
       <obj_property name="ObjectShortName">LD1</obj_property>
    </wvobject>
-   <wvobject fp_name="/ZedTensorStreamingProcessorTestBench/LD0" type="logic">
+   <wvobject type="logic" fp_name="/ZedTensorStreamingProcessorTestBench/LD0">
       <obj_property name="ElementShortName">LD0</obj_property>
       <obj_property name="ObjectShortName">LD0</obj_property>
    </wvobject>
-   <wvobject type="divider" fp_name="divider13">
-      <obj_property name="label">Instruction Memory</obj_property>
+   <wvobject type="logic" fp_name="/ZedTensorStreamingProcessorTestBench/DUT/clk">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/ZedTensorStreamingProcessorTestBench/DUT/locked">
+      <obj_property name="ElementShortName">locked</obj_property>
+      <obj_property name="ObjectShortName">locked</obj_property>
+   </wvobject>
+   <wvobject fp_name="divider2088" type="divider">
+      <obj_property name="label">ICU</obj_property>
       <obj_property name="DisplayName">label</obj_property>
    </wvobject>
-   <wvobject fp_name="/ZedTensorStreamingProcessorTestBench/DUT/instruction_out" type="array">
-      <obj_property name="ElementShortName">instruction_out[31:0]</obj_property>
-      <obj_property name="ObjectShortName">instruction_out[31:0]</obj_property>
+   <wvobject type="logic" fp_name="/ZedTensorStreamingProcessorTestBench/DUT/TSP_instance/icu/instr_valid">
+      <obj_property name="ElementShortName">instr_valid</obj_property>
+      <obj_property name="ObjectShortName">instr_valid</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/ZedTensorStreamingProcessorTestBench/DUT/TSP_instance/icu/instr_address">
+      <obj_property name="ElementShortName">instr_address[9:0]</obj_property>
+      <obj_property name="ObjectShortName">instr_address[9:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/ZedTensorStreamingProcessorTestBench/DUT/TSP_instance/icu/instr_in">
+      <obj_property name="ElementShortName">instr_in[31:0]</obj_property>
+      <obj_property name="ObjectShortName">instr_in[31:0]</obj_property>
    </wvobject>
 </wave_config>

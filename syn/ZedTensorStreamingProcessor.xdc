@@ -206,7 +206,7 @@ set_property PACKAGE_PIN P16 [get_ports {BTNC}];  # "BTNC"
 #set_property PACKAGE_PIN R16 [get_ports {BTND}];  # "BTND"
 #set_property PACKAGE_PIN N15 [get_ports {BTNL}];  # "BTNL"
 #set_property PACKAGE_PIN R18 [get_ports {BTNR}];  # "BTNR"
-set_property PACKAGE_PIN T18 [get_ports {BTNU}];  # "BTNU"
+#set_property PACKAGE_PIN T18 [get_ports {BTNU}];  # "BTNU"
 
 # ----------------------------------------------------------------------------
 # USB OTG Reset - Bank 34
@@ -369,7 +369,24 @@ set_property IOSTANDARD LVCMOS18 [get_ports -of_objects [get_iobanks 34]];
 # Set the bank voltage for IO Bank 35 to 1.8V by default.
 # set_property IOSTANDARD LVCMOS33 [get_ports -of_objects [get_iobanks 35]];
 # set_property IOSTANDARD LVCMOS25 [get_ports -of_objects [get_iobanks 35]];
-set_property IOSTANDARD LVCMOS18 [get_ports -of_objects [get_iobanks 35]];
+#set_property IOSTANDARD LVCMOS18 [get_ports -of_objects [get_iobanks 35]];
 
 # Note that the bank voltage for IO Bank 13 is fixed to 3.3V on ZedBoard. 
 set_property IOSTANDARD LVCMOS33 [get_ports -of_objects [get_iobanks 13]];
+
+# Timing constraints
+create_clock -name GCLK -period 10 [get_ports GCLK] # PLL constraints are auto-derived
+
+# Apply a timing constraint for input setup and hold times
+set_input_delay -clock [get_clocks -of_objects [get_pins clk_inst/inst/mmcm_adv_inst/CLKOUT0]] 5.0 [get_ports BTNC]
+set_input_delay -clock [get_clocks -of_objects [get_pins clk_inst/inst/mmcm_adv_inst/CLKOUT0]] -min 0.5 [get_ports BTNC]
+
+# Set output delay for LEDs to match clock transition time
+set_output_delay -clock [get_clocks -of_objects [get_pins clk_inst/inst/mmcm_adv_inst/CLKOUT0]] 5.0 [get_ports {LD0 LD1 LD2 LD3 LD4 LD5 LD6 LD7}]
+set_output_delay -clock [get_clocks -of_objects [get_pins clk_inst/inst/mmcm_adv_inst/CLKOUT0]] -min 1.0 [get_ports {LD0 LD1 LD2 LD3 LD4 LD5 LD6 LD7}]
+
+# Define LED drive strength (ensures proper voltage swing)
+set_property DRIVE 12 [get_ports {LD0 LD1 LD2 LD3 LD4 LD5 LD6 LD7}]
+
+# But, ignore timing constraints on the LEDs, since we are outputting the instruction being executed, for debugging purposes
+set_false_path -to [get_ports {LD0 LD1 LD2 LD3 LD4 LD5 LD6 LD7}]
