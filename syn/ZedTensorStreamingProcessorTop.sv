@@ -45,7 +45,7 @@ module ZedTensorStreamingProcessorTop (
 	timeunit 1ps;
 	timeprecision 1ps;
 	
-	logic [31:0] instruction_out;
+	logic [31:0] vxm_result_out;
 	logic clk, locked;
 	
 	// TODO:  The ARM core will load code to be executed onto the TSP memory
@@ -78,7 +78,7 @@ module ZedTensorStreamingProcessorTop (
 	
 	// Good practice to always register outputs
 	always_ff @(posedge clk) begin
-	   {LD7,LD6,LD5,LD4,LD3,LD2,LD1,LD0} <= instruction_out[7:0];
+	   {LD7,LD6,LD5,LD4,LD3,LD2,LD1,LD0} <= {vxm_result_out[31],vxm_result_out[6:0]};
 	end	
 
 	

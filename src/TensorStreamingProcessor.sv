@@ -10,7 +10,7 @@
 module TensorStreamingProcessor (
     input logic clk,
     input logic rst, // synchronous reset
-    output logic [31:0] instruction_out);
+    output logic [31:0] vxm_result_out);
     
     timeunit 1ns;
     timeprecision 1ps;
@@ -120,6 +120,8 @@ module TensorStreamingProcessor (
                  .srf_data2(operand2), 
                  .vxm_result(vxm_result));
              
-     assign instruction_out = instr; // for debugging
+    // We concatenate the Most Significant Word and the Least Significant Word in the result, so
+    // the vxm module actually synthesizes             
+    assign vxm_result_out = {vxm_result[NUM_TILES_PER_SLICE-1],vxm_result[0]};
     
 endmodule : TensorStreamingProcessor
