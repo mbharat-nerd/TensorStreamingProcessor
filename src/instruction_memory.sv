@@ -13,8 +13,8 @@ module instruction_memory
     // TODO:  replace with dynamic loading, say from DDR via ARM
     initial begin
         instr_mem[0] = 32'h03002080; // ADD S_0, S_4, S_8                
-        instr_mem[1] = 32'h04000810; // Write S_8, addr 0x0010
-        instr_mem[2] = 32'h00000000; // NOP (End program)
+        //instr_mem[1] = 32'h04000810; // Write S_8, addr 0x0010
+        instr_mem[1] = 32'h00000000; // NOP (End program)
     end
     
     always_ff @(posedge clk) begin

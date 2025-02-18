@@ -11,15 +11,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="1,027.967 ns"></ZoomStartTime>
-      <ZoomEndTime time="1,160.168 ns"></ZoomEndTime>
-      <Cursor1Time time="1,050.000 ns"></Cursor1Time>
+      <ZoomStartTime time="1,011.250 ns"></ZoomStartTime>
+      <ZoomEndTime time="1,363.751 ns"></ZoomEndTime>
+      <Cursor1Time time="1,110.000 ns"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="276"></NameColumnWidth>
-      <ValueColumnWidth column_width="88"></ValueColumnWidth>
+      <NameColumnWidth column_width="260"></NameColumnWidth>
+      <ValueColumnWidth column_width="60"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="35" />
+   <WVObjectSize size="34" />
    <wvobject fp_name="divider14" type="divider">
       <obj_property name="label">Top Level Signals</obj_property>
       <obj_property name="DisplayName">label</obj_property>
@@ -64,10 +64,6 @@
       <obj_property name="ElementShortName">LD0</obj_property>
       <obj_property name="ObjectShortName">LD0</obj_property>
    </wvobject>
-   <wvobject type="logic" fp_name="/ZedTensorStreamingProcessorTestBench/DUT/clk">
-      <obj_property name="ElementShortName">clk</obj_property>
-      <obj_property name="ObjectShortName">clk</obj_property>
-   </wvobject>
    <wvobject type="logic" fp_name="/ZedTensorStreamingProcessorTestBench/DUT/locked">
       <obj_property name="ElementShortName">locked</obj_property>
       <obj_property name="ObjectShortName">locked</obj_property>
@@ -75,6 +71,10 @@
    <wvobject fp_name="divider2088" type="divider">
       <obj_property name="label">ICU</obj_property>
       <obj_property name="DisplayName">label</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/ZedTensorStreamingProcessorTestBench/DUT/clk">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
    </wvobject>
    <wvobject type="logic" fp_name="/ZedTensorStreamingProcessorTestBench/DUT/TSP_instance/icu/instr_valid">
       <obj_property name="ElementShortName">instr_valid</obj_property>
@@ -88,76 +88,72 @@
       <obj_property name="ElementShortName">instr_in[31:0]</obj_property>
       <obj_property name="ObjectShortName">instr_in[31:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="divider4572" type="divider">
-      <obj_property name="label">SRF</obj_property>
-      <obj_property name="DisplayName">label</obj_property>
-   </wvobject>
-   <wvobject type="logic" fp_name="/ZedTensorStreamingProcessorTestBench/DUT/TSP_instance/srf_inst/srf_read_enable">
+   <wvobject type="logic" fp_name="/ZedTensorStreamingProcessorTestBench/DUT/TSP_instance/srf_read_enable">
       <obj_property name="ElementShortName">srf_read_enable</obj_property>
       <obj_property name="ObjectShortName">srf_read_enable</obj_property>
    </wvobject>
-   <wvobject type="logic" fp_name="/ZedTensorStreamingProcessorTestBench/DUT/TSP_instance/srf_inst/srf_write_enable">
-      <obj_property name="ElementShortName">srf_write_enable</obj_property>
-      <obj_property name="ObjectShortName">srf_write_enable</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/ZedTensorStreamingProcessorTestBench/DUT/TSP_instance/srf_inst/stream_src1">
-      <obj_property name="ElementShortName">stream_src1[4:0]</obj_property>
-      <obj_property name="ObjectShortName">stream_src1[4:0]</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/ZedTensorStreamingProcessorTestBench/DUT/TSP_instance/srf_inst/stream_src2">
-      <obj_property name="ElementShortName">stream_src2[4:0]</obj_property>
-      <obj_property name="ObjectShortName">stream_src2[4:0]</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/ZedTensorStreamingProcessorTestBench/DUT/TSP_instance/srf_inst/srf_data1">
+   <wvobject type="array" fp_name="/ZedTensorStreamingProcessorTestBench/DUT/TSP_instance/icu/srf_data1">
       <obj_property name="ElementShortName">srf_data1[0:19][15:0]</obj_property>
       <obj_property name="ObjectShortName">srf_data1[0:19][15:0]</obj_property>
    </wvobject>
-   <wvobject type="array" fp_name="/ZedTensorStreamingProcessorTestBench/DUT/TSP_instance/srf_inst/srf_data2">
+   <wvobject type="array" fp_name="/ZedTensorStreamingProcessorTestBench/DUT/TSP_instance/icu/srf_data2">
       <obj_property name="ElementShortName">srf_data2[0:19][15:0]</obj_property>
       <obj_property name="ObjectShortName">srf_data2[0:19][15:0]</obj_property>
    </wvobject>
-   <wvobject type="array" fp_name="/ZedTensorStreamingProcessorTestBench/DUT/TSP_instance/srf_inst/stream_dest">
-      <obj_property name="ElementShortName">stream_dest[4:0]</obj_property>
-      <obj_property name="ObjectShortName">stream_dest[4:0]</obj_property>
+   <wvobject type="logic" fp_name="/ZedTensorStreamingProcessorTestBench/DUT/TSP_instance/icu/vxm_enable_pipeline_stage1">
+      <obj_property name="ElementShortName">vxm_enable_pipeline_stage1</obj_property>
+      <obj_property name="ObjectShortName">vxm_enable_pipeline_stage1</obj_property>
    </wvobject>
-   <wvobject type="array" fp_name="/ZedTensorStreamingProcessorTestBench/DUT/TSP_instance/srf_inst/write_data">
-      <obj_property name="ElementShortName">write_data[0:19][15:0]</obj_property>
-      <obj_property name="ObjectShortName">write_data[0:19][15:0]</obj_property>
+   <wvobject type="logic" fp_name="/ZedTensorStreamingProcessorTestBench/DUT/TSP_instance/icu/vxm_enable_pipeline_stage2">
+      <obj_property name="ElementShortName">vxm_enable_pipeline_stage2</obj_property>
+      <obj_property name="ObjectShortName">vxm_enable_pipeline_stage2</obj_property>
    </wvobject>
-   <wvobject type="array" fp_name="/ZedTensorStreamingProcessorTestBench/DUT/TSP_instance/srf_inst/stream_registers">
-      <obj_property name="ElementShortName">stream_registers[0:31][0:19][15:0]</obj_property>
-      <obj_property name="ObjectShortName">stream_registers[0:31][0:19][15:0]</obj_property>
+   <wvobject type="array" fp_name="/ZedTensorStreamingProcessorTestBench/DUT/TSP_instance/icu/vxm_operation_pipeline_stage1">
+      <obj_property name="ElementShortName">vxm_operation_pipeline_stage1[1:0]</obj_property>
+      <obj_property name="ObjectShortName">vxm_operation_pipeline_stage1[1:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="divider2372" type="divider">
-      <obj_property name="label">memory_unit</obj_property>
+   <wvobject type="array" fp_name="/ZedTensorStreamingProcessorTestBench/DUT/TSP_instance/icu/vxm_operation_pipeline_stage2">
+      <obj_property name="ElementShortName">vxm_operation_pipeline_stage2[1:0]</obj_property>
+      <obj_property name="ObjectShortName">vxm_operation_pipeline_stage2[1:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/ZedTensorStreamingProcessorTestBench/DUT/TSP_instance/icu/operand1_pipeline_stage1">
+      <obj_property name="ElementShortName">operand1_pipeline_stage1[0:19][15:0]</obj_property>
+      <obj_property name="ObjectShortName">operand1_pipeline_stage1[0:19][15:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/ZedTensorStreamingProcessorTestBench/DUT/TSP_instance/icu/operand2_pipeline_stage1">
+      <obj_property name="ElementShortName">operand2_pipeline_stage1[0:19][15:0]</obj_property>
+      <obj_property name="ObjectShortName">operand2_pipeline_stage1[0:19][15:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/ZedTensorStreamingProcessorTestBench/DUT/TSP_instance/icu/operand1">
+      <obj_property name="ElementShortName">operand1[0:19][15:0]</obj_property>
+      <obj_property name="ObjectShortName">operand1[0:19][15:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/ZedTensorStreamingProcessorTestBench/DUT/TSP_instance/icu/operand2">
+      <obj_property name="ElementShortName">operand2[0:19][15:0]</obj_property>
+      <obj_property name="ObjectShortName">operand2[0:19][15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="divider4794" type="divider">
+      <obj_property name="label">VXM</obj_property>
       <obj_property name="DisplayName">label</obj_property>
    </wvobject>
-   <wvobject type="logic" fp_name="/ZedTensorStreamingProcessorTestBench/DUT/TSP_instance/data_memory_inst/mem_read_enable">
-      <obj_property name="ElementShortName">mem_read_enable</obj_property>
-      <obj_property name="ObjectShortName">mem_read_enable</obj_property>
+   <wvobject type="logic" fp_name="/ZedTensorStreamingProcessorTestBench/DUT/TSP_instance/vxm_inst/vxm_enable">
+      <obj_property name="ElementShortName">vxm_enable</obj_property>
+      <obj_property name="ObjectShortName">vxm_enable</obj_property>
    </wvobject>
-   <wvobject type="logic" fp_name="/ZedTensorStreamingProcessorTestBench/DUT/TSP_instance/data_memory_inst/mem_write_enable">
-      <obj_property name="ElementShortName">mem_write_enable</obj_property>
-      <obj_property name="ObjectShortName">mem_write_enable</obj_property>
+   <wvobject type="array" fp_name="/ZedTensorStreamingProcessorTestBench/DUT/TSP_instance/vxm_inst/operation">
+      <obj_property name="ElementShortName">operation[1:0]</obj_property>
+      <obj_property name="ObjectShortName">operation[1:0]</obj_property>
    </wvobject>
-   <wvobject type="array" fp_name="/ZedTensorStreamingProcessorTestBench/DUT/TSP_instance/data_memory_inst/address">
-      <obj_property name="ElementShortName">address[9:0]</obj_property>
-      <obj_property name="ObjectShortName">address[9:0]</obj_property>
+   <wvobject type="array" fp_name="/ZedTensorStreamingProcessorTestBench/DUT/TSP_instance/vxm_inst/srf_data1">
+      <obj_property name="ElementShortName">srf_data1[0:19][15:0]</obj_property>
+      <obj_property name="ObjectShortName">srf_data1[0:19][15:0]</obj_property>
    </wvobject>
-   <wvobject type="array" fp_name="/ZedTensorStreamingProcessorTestBench/DUT/TSP_instance/data_memory_inst/vector_length">
-      <obj_property name="ElementShortName">vector_length[4:0]</obj_property>
-      <obj_property name="ObjectShortName">vector_length[4:0]</obj_property>
+   <wvobject type="array" fp_name="/ZedTensorStreamingProcessorTestBench/DUT/TSP_instance/vxm_inst/srf_data2">
+      <obj_property name="ElementShortName">srf_data2[0:19][15:0]</obj_property>
+      <obj_property name="ObjectShortName">srf_data2[0:19][15:0]</obj_property>
    </wvobject>
-   <wvobject type="array" fp_name="/ZedTensorStreamingProcessorTestBench/DUT/TSP_instance/data_memory_inst/write_data">
-      <obj_property name="ElementShortName">write_data[0:19][15:0]</obj_property>
-      <obj_property name="ObjectShortName">write_data[0:19][15:0]</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/ZedTensorStreamingProcessorTestBench/DUT/TSP_instance/data_memory_inst/read_data">
-      <obj_property name="ElementShortName">read_data[0:19][15:0]</obj_property>
-      <obj_property name="ObjectShortName">read_data[0:19][15:0]</obj_property>
-   </wvobject>
-   <wvobject type="logic" fp_name="/ZedTensorStreamingProcessorTestBench/DUT/TSP_instance/data_memory_inst/mem_ready">
-      <obj_property name="ElementShortName">mem_ready</obj_property>
-      <obj_property name="ObjectShortName">mem_ready</obj_property>
+   <wvobject type="array" fp_name="/ZedTensorStreamingProcessorTestBench/DUT/TSP_instance/vxm_inst/vxm_result">
+      <obj_property name="ElementShortName">vxm_result[0:19][15:0]</obj_property>
+      <obj_property name="ObjectShortName">vxm_result[0:19][15:0]</obj_property>
    </wvobject>
 </wave_config>

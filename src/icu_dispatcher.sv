@@ -32,9 +32,17 @@ module icu_dispatcher
      
      // VXM control
      output logic vxm_enable,
+     output logic [1:0] vxm_operation,
      output logic [MIN_VEC_LENGTH-1:0] operand1 [0:NUM_TILES_PER_SLICE-1],
      output logic [MIN_VEC_LENGTH-1:0] operand2 [0:NUM_TILES_PER_SLICE-1],
      input logic [MIN_VEC_LENGTH-1:0] vxm_result [0:NUM_TILES_PER_SLICE-1]);
+     
+     timeunit 1ns;
+     timeprecision 1ps;          
+     
+     logic srf_read_enable_pipeline;
+     logic vxm_enable_pipeline_stage1, vxm_enable_pipeline_stage2;
+     logic [1:0] vxm_operation_pipeline_stage1, vxm_operation_pipeline_stage2; 
      
      always_ff @(posedge clk) begin
         if (rst) begin
@@ -42,16 +50,14 @@ module icu_dispatcher
             mem_read_enable <= '0;
             mem_write_enable <= '0;
             srf_read_enable <= '0;
-            srf_write_enable <= '0;
-            vxm_enable <= '0;
+            srf_write_enable <= '0;                                  
         end            
         else begin       
             // Default Deassertions
             mem_read_enable  <= '0;
             mem_write_enable <= '0;
             srf_read_enable  <= '0;
-            srf_write_enable <= '0;
-            vxm_enable       <= '0;       
+            srf_write_enable <= '0;        
             if (instr_valid) begin
                 case(instr_in[31:24])
                     8'h01: begin // Read a,s (UNUSED)
@@ -66,14 +72,7 @@ module icu_dispatcher
                         srf_read_enable <= 1'b1;
                         stream_src1 <= instr_in[4:0];
                         stream_src2 <= instr_in[9:5];
-                        stream_dest <= instr_in[14:10];
-                        vxm_enable <= 1'b1;
-                        
-                        // pass operands (vectors) to VXM
-                        for(int i = 0;i < NUM_TILES_PER_SLICE;i++) begin
-                            operand1[i] <= srf_data1[i];
-                            operand2[i] <= srf_data2[i];
-                        end         
+                        stream_dest <= instr_in[14:10];                                                                                                
                     end     
                     
                     8'h04: begin // Write s, a
@@ -87,26 +86,58 @@ module icu_dispatcher
                         for (int i = 0; i < NUM_TILES_PER_SLICE; i++) begin
                             write_data[i] <= srf_data1[i];  
                         end
-                    end      
-                    
-                    default: begin
-                        // Ensures no control signal gets latched
-                        mem_read_enable  <= '0;
-                        mem_write_enable <= '0;
-                        srf_read_enable  <= '0;
-                        srf_write_enable <= '0;
-                        vxm_enable       <= '0;
-                    end
+                    end                                      
                 endcase                                                         
-            end         
-            else begin
-                mem_read_enable <= '0;
-                mem_write_enable <= '0;
-                srf_read_enable <= '0;
-                srf_write_enable <= '0;
-                vxm_enable <= '0;         
-            end                   
+            end                  
             instr_address <= instr_address + 1'b1;
          end
      end               
+          
+          
+     always_ff @(posedge clk) begin
+            if (rst) begin
+                srf_read_enable_pipeline <= 1'b0;
+                vxm_enable_pipeline_stage1 <= 1'b0;
+                vxm_enable_pipeline_stage2 <= 1'b0;
+                vxm_operation_pipeline_stage1 <= 2'b11;
+                vxm_operation_pipeline_stage2 <= 2'b11;
+
+                for (int i = 0; i < NUM_TILES_PER_SLICE; i++) begin      
+                    operand1[i] <= 0;
+                    operand2[i] <= 0;
+                end
+            end
+            else begin
+                // ✅ Delay read enable so operands are captured AFTER `srf_data1` is valid
+                srf_read_enable_pipeline <= srf_read_enable;
+                
+                // ✅ First Stage: Capture operands correctly, delay enable
+                if (srf_read_enable) begin
+                    vxm_enable_pipeline_stage1 <= 1'b1;
+                    vxm_operation_pipeline_stage1 <= 2'b00; // ADD operation                            
+                end 
+                else begin
+                    vxm_enable_pipeline_stage1 <= 1'b0;
+                    vxm_operation_pipeline_stage1 <= 2'b11;                            
+                end
+                
+                // ✅ Final stage: Pipeline control signals and assign operands for execution
+                vxm_enable_pipeline_stage2 <= vxm_enable_pipeline_stage1;
+                vxm_operation_pipeline_stage2 <= vxm_operation_pipeline_stage1; 
+                
+                if (srf_read_enable_pipeline) begin
+                    for (int i = 0; i < NUM_TILES_PER_SLICE; i++) begin
+                        operand1[i] <= srf_data1[i];
+                        operand2[i] <= srf_data2[i];
+                    end
+                end                                                                                              
+            end
+    end
+
+    // ✅ Now vxm signals will be properly aligned    
+    assign vxm_enable = vxm_enable_pipeline_stage2;
+    assign vxm_operation = vxm_operation_pipeline_stage2;
+
+
+     
 endmodule : icu_dispatcher     

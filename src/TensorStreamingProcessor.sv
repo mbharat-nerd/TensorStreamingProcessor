@@ -29,7 +29,7 @@ module TensorStreamingProcessor (
     
     logic mem_read_enable, mem_write_enable, mem_ready;
     logic [DATA_MEM_ADDR_WIDTH-1:0] data_mem_address;
-    logic [MIN_VEC_LENGTH-1:0] vector_length;
+    logic [NUM_VECTORS-1:0] vector_length;
     logic [MIN_VEC_LENGTH-1:0] write_data [0:NUM_TILES_PER_SLICE-1];
     logic [MIN_VEC_LENGTH-1:0] read_data [0:NUM_TILES_PER_SLICE-1];
     logic [NUM_STREAM_ID-1:0] output_stream_id;
@@ -38,6 +38,13 @@ module TensorStreamingProcessor (
     logic [NUM_STREAM_ID-1:0] stream_src1, stream_src2, stream_dest;
     logic [MIN_VEC_LENGTH-1:0] srf_data1 [0:NUM_TILES_PER_SLICE-1];
     logic [MIN_VEC_LENGTH-1:0] srf_data2 [0:NUM_TILES_PER_SLICE-1];
+    
+    logic vxm_enable;
+    logic [1:0] vxm_operation;
+    logic [MIN_VEC_LENGTH-1:0] operand1 [0:NUM_TILES_PER_SLICE-1];
+    logic [MIN_VEC_LENGTH-1:0] operand2 [0:NUM_TILES_PER_SLICE-1];
+    logic [MIN_VEC_LENGTH-1:0] vxm_result [0:NUM_TILES_PER_SLICE-1];
+    
     
     icu_dispatcher
         #(.INSTR_WIDTH(INSTR_WIDTH),
@@ -56,23 +63,22 @@ module TensorStreamingProcessor (
          .mem_write_enable(mem_write_enable),
          .mem_address(data_mem_address),
          .vector_length(vector_length),
-     
-          // SRF control
-          .srf_read_enable(srf_read_enable),
-          .srf_write_enable(srf_write_enable),
-          .stream_src1(stream_src1),
-          .stream_src2(stream_src2),
-          .stream_dest(stream_dest),
-          .write_stream(),
-          .srf_data1(),
-          .srf_data2(),
-          .write_data(), // Data from SRF to store in memory
-     
-            // VXM control
-            .vxm_enable(),
-            .operand1(),
-            .operand2(),
-            .vxm_result());
+          
+         .srf_read_enable(srf_read_enable),
+         .srf_write_enable(srf_write_enable),
+         .stream_src1(stream_src1),
+         .stream_src2(stream_src2),
+         .stream_dest(stream_dest),
+         .write_stream(),
+         .srf_data1(srf_data1),
+         .srf_data2(srf_data2),
+         .write_data(), // Data from SRF to store in memory
+                 
+          .vxm_enable(vxm_enable),
+          .vxm_operation(vxm_operation),
+          .operand1(operand1),
+          .operand2(operand2),
+          .vxm_result(vxm_result));
      
     instruction_memory 
         #(.INSTR_WIDTH(INSTR_WIDTH),
@@ -103,7 +109,16 @@ module TensorStreamingProcessor (
       .MIN_VEC_LENGTH(MIN_VEC_LENGTH),
       .NUM_TILES_PER_SLICE(NUM_TILES_PER_SLICE))
       srf_inst (.*,       
-                .write_data());                        
+                .write_data());               
+                
+    vector_execution_module
+    #(.MIN_VEC_LENGTH(MIN_VEC_LENGTH),
+      .NUM_TILES_PER_SLICE(NUM_TILES_PER_SLICE))
+       vxm_inst (.*,    
+                 .operation(vxm_operation),
+                 .srf_data1(operand1),
+                 .srf_data2(operand2), // Second operand stream
+                 .vxm_result(vxm_result));
              
      assign instruction_out = instr; // for debugging
     
