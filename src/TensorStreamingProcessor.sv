@@ -20,13 +20,24 @@ module TensorStreamingProcessor (
     localparam integer NUM_TILES_PER_SLICE = 20; // We have 20 tiles per vertical slice
     localparam integer MIN_VEC_LENGTH = 16; // The smallest vector length is 16, to a maximum of NUM_TILES_PER_SLICE*MIN_VEC_LENGTH = 320
     localparam integer NUM_STREAM_ID = 5; // We have 2**NUM_STREAM_ID total SRFs.  So, by default, we have 32 SRFs
-    localparam integer DATA_MEM_ADDR_WITH = 10;
+    localparam integer DATA_MEM_ADDR_WIDTH = 10;
     localparam integer NUM_VECTORS = 5; // num of elements : 1 - 20    
     
     logic [INSTR_WIDTH-1:0] instr;
     logic [INSTR_MEM_ADDR_WIDTH-1:0] instr_address;
     logic instr_valid;
     
+    logic mem_read_enable, mem_write_enable, mem_ready;
+    logic [DATA_MEM_ADDR_WIDTH-1:0] data_mem_address;
+    logic [MIN_VEC_LENGTH-1:0] vector_length;
+    logic [MIN_VEC_LENGTH-1:0] write_data [0:NUM_TILES_PER_SLICE-1];
+    logic [MIN_VEC_LENGTH-1:0] read_data [0:NUM_TILES_PER_SLICE-1];
+    logic [NUM_STREAM_ID-1:0] output_stream_id;
+    
+    logic srf_read_enable, srf_write_enable;
+    logic [NUM_STREAM_ID-1:0] stream_src1, stream_src2, stream_dest;
+    logic [MIN_VEC_LENGTH-1:0] srf_data1 [0:NUM_TILES_PER_SLICE-1];
+    logic [MIN_VEC_LENGTH-1:0] srf_data2 [0:NUM_TILES_PER_SLICE-1];
     
     icu_dispatcher
         #(.INSTR_WIDTH(INSTR_WIDTH),
@@ -41,17 +52,17 @@ module TensorStreamingProcessor (
           .instr_in(instr),
      
           // Data memory control
-         .mem_read_enable(),
-         .mem_write_enable(),
-         .mem_address(),
-         .vector_length(),
+         .mem_read_enable(mem_read_enable), // read is unused because of latency
+         .mem_write_enable(mem_write_enable),
+         .mem_address(data_mem_address),
+         .vector_length(vector_length),
      
           // SRF control
-          .srf_read_enable(),
-          .srf_write_enable(),
-          .stream_src1(),
-          .stream_src2(),
-          .stream_dest(),
+          .srf_read_enable(srf_read_enable),
+          .srf_write_enable(srf_write_enable),
+          .stream_src1(stream_src1),
+          .stream_src2(stream_src2),
+          .stream_dest(stream_dest),
           .write_stream(),
           .srf_data1(),
           .srf_data2(),
@@ -65,13 +76,34 @@ module TensorStreamingProcessor (
      
     instruction_memory 
         #(.INSTR_WIDTH(INSTR_WIDTH),
-         .INSTR_MEM_ADDR_WIDTH(INSTR_MEM_ADDR_WIDTH)
-         ) instruction_memory_inst
+          .INSTR_MEM_ADDR_WIDTH(INSTR_MEM_ADDR_WIDTH))
+         instruction_memory_inst
             (.*,// clk, rst
              .instr_out(instr),
              .instr_valid(instr_valid),
              .address(instr_address));
-                            
+    
+    memory_unit 
+        #(.MEM_ADDR_WIDTH(DATA_MEM_ADDR_WIDTH),
+          .NUM_VECTORS(NUM_VECTORS),
+          .MIN_VEC_LENGTH(MIN_VEC_LENGTH),
+          .NUM_STREAM_ID(NUM_STREAM_ID),
+          .NUM_TILES_PER_SLICE(NUM_TILES_PER_SLICE))
+        data_memory_inst 
+        (.*, // clk, rst and other signals        
+         .address(data_mem_address),
+         .vector_length(vector_length), // Number of elements to load (1-20)
+         .write_data(write_data),
+         .read_data(read_data), // output vector
+         .output_stream_id(output_stream_id),
+         .mem_ready(mem_ready));         
+         
+    streaming_register_file
+    #(.NUM_STREAM_ID(NUM_STREAM_ID),
+      .MIN_VEC_LENGTH(MIN_VEC_LENGTH),
+      .NUM_TILES_PER_SLICE(NUM_TILES_PER_SLICE))
+      srf_inst (.*,       
+                .write_data());                        
              
      assign instruction_out = instr; // for debugging
     

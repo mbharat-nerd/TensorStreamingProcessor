@@ -8,7 +8,6 @@ add_files -norecurse ../src/icu_dispatcher.sv
 add_files -norecurse ../src/streaming_register_file.sv
 add_files -norecurse ../src/vector_execution_unit.sv
 add_files -norecurse ../src/memory_unit.sv
-add_files -norecurse ../src/vector_data.hex
 add_files -norecurse ../src/instruction_memory.sv
 
 # Clock buffer(s)

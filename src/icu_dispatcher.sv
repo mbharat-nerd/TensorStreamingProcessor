@@ -54,7 +54,7 @@ module icu_dispatcher
             vxm_enable       <= '0;       
             if (instr_valid) begin
                 case(instr_in[31:24])
-                    8'h01: begin // Read a,s
+                    8'h01: begin // Read a,s (UNUSED)
                         mem_read_enable <= 1'b1;
                         srf_write_enable <= 1'b1;
                         mem_address <= instr_in[23:14];
@@ -64,9 +64,9 @@ module icu_dispatcher
                     
                     8'h03: begin // Add stream_src1, stream_src2, stream_dest
                         srf_read_enable <= 1'b1;
-                        stream_src1 <= instr_in[9:5];
-                        stream_src2 <= instr_in[14:10];
-                        stream_dest <= instr_in[19:15];
+                        stream_src1 <= instr_in[4:0];
+                        stream_src2 <= instr_in[9:5];
+                        stream_dest <= instr_in[14:10];
                         vxm_enable <= 1'b1;
                         
                         // pass operands (vectors) to VXM
