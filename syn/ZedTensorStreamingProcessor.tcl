@@ -7,6 +7,7 @@ add_files -norecurse ../src/TensorStreamingProcessor.sv
 add_files -norecurse ../src/icu_dispatcher.sv
 add_files -norecurse ../src/streaming_register_file.sv
 add_files -norecurse ../src/vector_execution_unit.sv
+add_files -norecurse ../src/vxm_slice.sv
 add_files -norecurse ../src/memory_unit.sv
 add_files -norecurse ../src/instruction_memory.sv
 

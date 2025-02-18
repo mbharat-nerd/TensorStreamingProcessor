@@ -111,13 +111,13 @@ module TensorStreamingProcessor (
       srf_inst (.*,       
                 .write_data());               
                 
-    vector_execution_module
+    vxm_slice
     #(.MIN_VEC_LENGTH(MIN_VEC_LENGTH),
       .NUM_TILES_PER_SLICE(NUM_TILES_PER_SLICE))
        vxm_inst (.*,    
                  .operation(vxm_operation),
                  .srf_data1(operand1),
-                 .srf_data2(operand2), // Second operand stream
+                 .srf_data2(operand2), 
                  .vxm_result(vxm_result));
              
      assign instruction_out = instr; // for debugging

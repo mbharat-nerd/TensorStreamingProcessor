@@ -1,40 +1,30 @@
-module vector_execution_module
-    #(parameter MIN_VEC_LENGTH = 16,
-      parameter NUM_TILES_PER_SLICE = 20)
+module vector_execution_unit
+    #(parameter MIN_VEC_LENGTH = 16)
 (
     input logic clk,
     input logic rst,
-    input logic vxm_enable,  // When asserted, executes the vector operation
+    input logic vxm_enable,  // When asserted, executes math operation
     input logic [1:0] operation, // 00 = ADD, 01 = MUL (future expansion)
-    input logic [MIN_VEC_LENGTH-1:0] srf_data1 [0:NUM_TILES_PER_SLICE-1], // First operand stream
-    input logic [MIN_VEC_LENGTH-1:0] srf_data2 [0:NUM_TILES_PER_SLICE-1], // Second operand stream
-    output logic [MIN_VEC_LENGTH-1:0] vxm_result [0:NUM_TILES_PER_SLICE-1] // Output result stream
+    input logic [MIN_VEC_LENGTH-1:0] operand1,
+    input logic [MIN_VEC_LENGTH-1:0] operand2,
+    output logic [MIN_VEC_LENGTH-1:0] vxm_result
 );
 
     timeunit 1ns;
     timeprecision 1ps;
 
     always_ff @(posedge clk) begin
-        if (rst) begin
-            for (int i = 0; i < NUM_TILES_PER_SLICE; i++) begin
-                vxm_result[i] <= 0;
-            end
+        if (rst) begin           
+            vxm_result <= '0;            
         end
         else if (vxm_enable) begin
             case (operation)
-                2'b00: begin // **Vector Addition**
-                    for (int i = 0; i < NUM_TILES_PER_SLICE; i++) begin
-                        vxm_result[i] <= srf_data1[i] + srf_data2[i];
-                    end
-                end                              
-
-                default: begin
-                    for (int i = 0; i < NUM_TILES_PER_SLICE; i++) begin
-                        vxm_result[i] <= 0;
-                    end
-                end
+                2'b00: vxm_result <= operand1 + operand2;
+                2'b01: vxm_result <= operand1 - operand2;                   
+                2'b10: vxm_result <= operand1 * operand2; // vector dot product
+                default: vxm_result <= '0;
             endcase
         end
     end
 
-endmodule : vector_execution_module
+endmodule : vector_execution_unit
