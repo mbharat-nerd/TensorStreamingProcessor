@@ -11,9 +11,17 @@ architecture concepts such as clock domain crossings, pipelining and (AXI) proto
 
 **Before** going through this document, **please read Groq's paper** to gather some fundamental ideas.  **It will be assumed that you have read the paper, before reading this (and other) documentation.**
 
-## Block Diagram 
+## Block Diagram and Subsystems
 
-TBD
+Figure below shows the top level schematic from Vivado Synthesis (default settings).
+
+![image](./images/TopLevelSchematic.png)
+
+We use the classic two stage synchronizer to ensure asynchronous BTNC (reset) is synchronized to a clock.  Figure below shows the TSP_instance.
+
+![image](./images/TSP_instance.png)
+
+To Be Completed
 
 ## Example Simulation
 
