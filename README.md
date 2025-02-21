@@ -1,5 +1,7 @@
 # TensorStreamingProcessor
 
+[UPDATE]:  I am getting busy with work, so I will only revisit this project in Summer (June) 2025.
+
 Folder structure:
 
 `syn/` - has board specific top level, tcl and constraints files

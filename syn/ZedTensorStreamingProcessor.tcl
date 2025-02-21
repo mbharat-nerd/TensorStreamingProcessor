@@ -11,6 +11,9 @@ add_files -norecurse ../src/vxm_slice.sv
 add_files -norecurse ../src/memory_unit.sv
 add_files -norecurse ../src/instruction_memory.sv
 
+# Clock domain crossing IPs
+add_files -norecurse ../src/async_fifo.sv
+
 # Clock buffer(s)
 create_ip -name clk_wiz -vendor xilinx.com -library ip -version 6.0 -module_name clk_wiz_0
 generate_target {instantiation_template} [get_files ./ZedTensorStreamingProcessor/ZedTensorStreamingProcessor.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0.xci]
